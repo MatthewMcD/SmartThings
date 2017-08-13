@@ -33,15 +33,10 @@ preferences {
     }
     section("Turn on these dimmers") {
         input "dimmers", "capability.switchLevel", required: false, multiple:true
+        input "level", "number", required: false, title: "Dimming level?", defaultValue:"10", range: "1..100"
+        input "rate", "number", required: false, title: "Dimming rate?", defaultValue:"1", range: "1..10"
     }
-    section("Dim to this level:") {
-        input "level", "number", required: false, title: "Dimming level?"
-    }
-    section("Dim at this rate:") {
-        input "rate", "number", required: false, title: "Dimming rate?"
-        //input "level", "number", required: false, title: "Dimming level?", range: 1..100
-        //input "rate", "number", required: false, title: "Dimming rate?", range: 1..10
-    }
+
     //Add Timing - http://docs.smartthings.com/en/latest/smartapp-developers-guide/time-methods.html
     section("Active between what times?") {
         input "fromTime", "time", title: "From", required: false
