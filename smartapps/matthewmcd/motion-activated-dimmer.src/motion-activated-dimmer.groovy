@@ -33,19 +33,17 @@ preferences {
     }
     section("Turn on these dimmers") {
         input "dimmers", "capability.switchLevel", required: false, multiple:true
-        input "level", "number", required: true, title: "Dimming level?", range: 1..100, defaultValue: 10
-        input "rate", "number", required: true, title: "Dimming rate?", range: 1..10, defaultValue: 10
     }
-    //section("Set the dimmer level") {
-    //Is there a better input?
-    //    input "level", "number", required: true, title: "Level?"
-    //}
-    //section("Dimming rate") {
-    //Does rate do anything?
-    //    input "rate", "number", required: true, title: "Rate?"
-    //}
+    section("Dim to this level:") {
+        input "level", "number", required: false, title: "Dimming level?", range: 1..100, defaultValue: 10
+    }
+    section("Dim at this rate:") {
+        input "rate", "number", required: false, title: "Dimming rate?", range: 1..10, defaultValue: 1
+        //input "level", "number", required: false, title: "Dimming level?", range: 1..100
+        //input "rate", "number", required: false, title: "Dimming rate?", range: 1..10
+    }
     //Add Timing - http://docs.smartthings.com/en/latest/smartapp-developers-guide/time-methods.html
-    section("Turn on between what times?") {
+    section("Active between what times?") {
         input "fromTime", "time", title: "From", required: false
         input "toTime", "time", title: "To", required: false
     }
@@ -81,12 +79,8 @@ def motionDetectedHandler(evt) {
 	}
 	//if the light is on, don't change it
 	//http://docs.smartthings.com/en/latest/ref-docs/device-ref.html#device-current-state
-    
     def dimmerOn = isOn(dimmers)
-    
     def switchOn = isOn(switches)
-    
-    
     
     boolean between = true;
     log.debug "no current setting for time between: ${between.toString()}"
