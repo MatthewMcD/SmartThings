@@ -35,10 +35,10 @@ preferences {
         input "dimmers", "capability.switchLevel", required: false, multiple:true
     }
     section("Dim to this level:") {
-        input "level", "number", required: false, title: "Dimming level?", range: 1..100, defaultValue: 10
+        input "level", "number", required: false, title: "Dimming level?"
     }
     section("Dim at this rate:") {
-        input "rate", "number", required: false, title: "Dimming rate?", range: 1..10, defaultValue: 1
+        input "rate", "number", required: false, title: "Dimming rate?"
         //input "level", "number", required: false, title: "Dimming level?", range: 1..100
         //input "rate", "number", required: false, title: "Dimming rate?", range: 1..10
     }
