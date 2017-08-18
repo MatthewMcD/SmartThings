@@ -12,6 +12,8 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ *  Version: 1.0
+ *
  */
 definition(
     name: "Motion Activated Dimmer",
@@ -19,9 +21,9 @@ definition(
     author: "Matthew McDermott",
     description: "Improved motion activated light control for dimmers and switches.",
     category: "My Apps",
-    iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
-    iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
-    iconX3Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png")
+    iconUrl: "https://s3.amazonaws.com/smartapp-icons/Categories/lightsAndSwitches.png",
+    iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Categories/lightsAndSwitches@2x.png",
+    iconX3Url: "https://s3.amazonaws.com/smartapp-icons/Categories/lightsAndSwitches@2x.png")
 
 
 preferences {
@@ -41,6 +43,9 @@ preferences {
     section("Active between what times?") {
         input "fromTime", "time", title: "From", required: false
         input "toTime", "time", title: "To", required: false
+    }
+    section("Change to what mode?"){
+    	input "newMode", "mode", title: "select a mode"
     }
 }
 
@@ -101,7 +106,22 @@ def motionDetectedHandler(evt) {
     } else {
        log.debug "Motion ignored because switches or dimmers are on."
     }
+    if (newMode){
+    	changeMode()
+    }
     
+}
+
+def changeMode() {
+    log.debug "changeMode, location.mode = $location.mode, newMode = $newMode, location.modes = $location.modes"
+
+    if (location.mode != newMode) {
+        if (location.modes?.find{it.name == newMode}) {
+            setLocationMode(newMode)
+        }  else {
+            log.warn "Tried to change to undefined mode '${newMode}'"
+        }
+    }
 }
 
 def isOn(arr){
